@@ -1,0 +1,54 @@
+<div class="main">
+    <div class="container">
+        <section class="wrapper">
+            <form class="form" action="/user/verify-code" method="post">
+                <div class="input-control">
+                    <label for="code" class="input-label" hidden>Code</label>
+                    <input type="text" name="code" id="code" class="input-field" placeholder="Enter Code Here">
+                </div>
+                <div style="font-size: 12px; opacity: 0.7" class="ml-2 notiEmailCode">
+                    <div>
+                        <span>Code was send</span>
+                        <span class="countdown"></span>
+                    </div>
+                </div>
+                <div class="input-control" style="float:right">
+                    <button type="submit" name="submit" class="input-submit">Verify</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    {{#if error}}
+    <div id="error">{{error}}</div>
+    {{/if}}
+    {{#if success}}
+    <div id="success">{{success}}</div>
+    {{/if}}
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var timer2 = "0:50";
+        var interval = setInterval(function () {
+            var timer = timer2.split(':');
+            //by parsing integer, I avoid all extra string processing
+            var minutes = parseInt(timer[0], 10);
+            var seconds = parseInt(timer[1], 10);
+            --seconds;
+            minutes = (seconds < 0) ? --minutes : minutes;
+            if (minutes < 0) clearInterval(interval);
+            seconds = (seconds < 0) ? 59 : seconds;
+            seconds = (seconds < 10) ? '0' + seconds : seconds;
+            //minutes = (minutes < 10) ?  minutes : minutes;
+            $('.countdown').html(minutes + ':' + seconds);
+            timer2 = minutes + ':' + seconds;
+            if (timer2 == "0:00") {
+                window.location.href = "/user/login"
+            }
+        }, 1000);
+        setTimeout(function () {
+            $('#error').fadeOut('slow')
+            $('#success').fadeOut('slow')
+        }, 2000)
+    })
+</script>
