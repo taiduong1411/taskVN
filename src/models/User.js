@@ -26,15 +26,15 @@ const UserModel = new Schema({
         type: Boolean,
         default: false
     },
-    isLike: {
-        type: [String]
-    },
     level: {
         type: String
     },
     password: {
         type: String,
         required: true
+    },
+    myTask: {
+        type: [String]
     }
 }, {
     timestamps: true

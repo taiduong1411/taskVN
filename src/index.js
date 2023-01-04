@@ -12,25 +12,28 @@ const nodemailer = require('nodemailer')
 const port = process.env.PORT || 3000
 database.connect();
 // CONTROLLERS
-const UserController = require('./controllers/UserControllers.js')
+const UserController = require('./controllers/UserControllers')
 const PaymentController = require('./controllers/PaymentController')
+const TaskController = require('./controllers/TaskController')
 
 
 
 
 // ROUTER
-const UserRouter = require('./routers/UserRouter.js');
-const PaymentRouter = require('./routers/PaymentRouter')
+const UserRouter = require('./routers/UserRouter');
+const PaymentRouter = require('./routers/PaymentRouter');
+const TaskRouter = require('./routers/TaskRouter')
 
 
 // MODELS
-const User = require('./models/User.js');
+const User = require('./models/User');
 const OTP = require('./models/OTP')
+const Task = require('./models/Task')
 
 // API
-
 const UserAPI = require('./APIs/UserAPI')
 const OtpAPI = require('./APIs/OTPAPI');
+const TaskAPI = require('./APIs/TaskAPI')
 
 
 
@@ -56,7 +59,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // index
 
-app.use('/user', UserRouter)
+app.use('/user', UserRouter, TaskRouter)
 app.use('/payment', PaymentRouter)
 
 app.get('/get-started', async(req, res, next) => {
