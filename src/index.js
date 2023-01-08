@@ -12,7 +12,7 @@ const nodemailer = require('nodemailer')
 const port = process.env.PORT || 3000
 database.connect();
 // CONTROLLERS
-const UserController = require('./controllers/UserControllers')
+const UserController = require('./controllers/UserController')
 const PaymentController = require('./controllers/PaymentController')
 const TaskController = require('./controllers/TaskController')
 
@@ -31,10 +31,10 @@ const OTP = require('./models/OTP')
 const Task = require('./models/Task')
 
 // API
-const UserAPI = require('./APIs/UserAPI')
+const UserAPI = require('./APIs/UserAPI');
 const OtpAPI = require('./APIs/OTPAPI');
-const TaskAPI = require('./APIs/TaskAPI')
-
+const TaskAPI = require('./APIs/TaskAPI');
+// HELPER
 
 
 
@@ -69,6 +69,8 @@ app.get('/home', async(req, res, next) => {
     if (!req.session.email) {
         return res.redirect('/user/login')
     }
+    let error = req.flash('error' || '')
+    let success = req.flash('success' || '')
     let user = await UserAPI.getOne({ email: req.session.email })
     let today = new Date().toLocaleDateString()
     let time = new Date().toLocaleTimeString()
@@ -77,7 +79,9 @@ app.get('/home', async(req, res, next) => {
         today: today,
         time: time,
         avatar: user.avatar,
-        isPremium: (user.isPremium == true) ? false : true
+        isPremium: (user.isPremium == true) ? false : true,
+        error: error,
+        success: success
     })
 })
 app.get('/404', (req, res, next) => {

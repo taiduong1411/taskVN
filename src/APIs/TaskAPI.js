@@ -26,6 +26,12 @@ const TaskAPI = {
                     return task
                 })
         }
+        if (options.title) {
+            return await Task.findOne({ title: options.title }).lean()
+                .then(task => {
+                    return task
+                })
+        }
     },
     getAll: async(options) => {
         let sort = options.sort || 1
@@ -41,11 +47,14 @@ const TaskAPI = {
                 return tasks.map(tasks => {
                     return {
                         taskID: tasks.taskID,
+                        title: tasks.title,
                         description: tasks.description,
                         personCreate: tasks.personCreate,
                         member: tasks.member,
                         isComplete: tasks.isComplete,
-                        slug: tasks.slug
+                        slug: tasks.slug,
+                        createdAt: (tasks.createdAt).toLocaleDateString('en-GB'),
+                        updatedAt: (tasks.updatedAt).toLocaleDateString('en-GB')
                     }
                 })
             })

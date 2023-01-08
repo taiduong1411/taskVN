@@ -8,9 +8,12 @@ const TaskModel = new Schema({
         required: true,
         unique: true
     },
-    description: {
+    title: {
         type: String,
         required: true
+    },
+    description: {
+        type: [Object]
     },
     personCreate: {
         type: String,
@@ -25,7 +28,7 @@ const TaskModel = new Schema({
     },
     slug: {
         type: String,
-        slug: 'taskID'
+        slug: 'title'
     }
 }, {
     timestamps: true

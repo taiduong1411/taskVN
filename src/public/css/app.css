@@ -849,16 +849,10 @@ body.light-mode .video-bg:before {
 }
 
 .status {
-    margin-left: auto;
+    margin-left: 16px;
     width: 140px;
     font-size: 15px;
     position: relative;
-}
-
-@media screen and (max-width: 700px) {
-    .status {
-        display: none;
-    }
 }
 
 .status-circle {
@@ -867,12 +861,16 @@ body.light-mode .video-bg:before {
     background-color: #396df0;
     position: absolute;
     border-radius: 50%;
-    top: 4px;
+    top: 8px;
     left: -20px;
 }
 
 .status-circle.green {
     background-color: #3bf083;
+}
+
+.status-circle.red {
+    background-color: red;
 }
 
 .status-button {
@@ -1100,22 +1098,13 @@ body.light-mode .video-bg:before {
     padding: 20px;
     cursor: pointer;
     transition: 0.3s ease;
+    margin-right: 20px;
+    margin-bottom: 10px;
 }
 
 .app-card:hover {
     transform: scale(1.02);
     background-color: var(--theme-bg-color);
-}
-
-.app-card svg {
-    width: 28px;
-    border-radius: 6px;
-    margin-right: 12px;
-    flex-shrink: 0;
-}
-
-.app-card+.app-card {
-    margin-left: 20px;
 }
 
 .app-card span {
@@ -1200,4 +1189,55 @@ body.light-mode .video-bg:before {
     padding: 0px 8px;
     line-height: 40px;
     border-left: 6px solid green;
+}
+
+
+/* CREATE TASK */
+
+.app-card-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    font-size: 16px;
+    background-color: var(--content-bg);
+    border-radius: 14px;
+    border: 1px solid var(--theme-bg-color);
+    padding: 20px;
+    margin: auto;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.create-task button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    margin-right: 32px;
+    margin-bottom: 98px;
+    z-index: 1000000
+}
+
+.create-task button a {
+    text-decoration: none;
+}
+
+
+/* .form-create-task {
+    height: 300px;
+} */
+
+.form-create-task input {
+    height: 50px;
+    padding: 4px 10px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--theme-bg-color);
+    width: 100%;
+}
+
+.form-create-task .sub-title input {
+    width: 80%;
 }

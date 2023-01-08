@@ -18,9 +18,6 @@
         <div class="menu-circle"></div>
         <div class="header-menu">
             <a class="menu-link is-active" href="/home">Home</a>
-            {{!-- <a class="menu-link notify" href="#">Your work</a>
-            <a class="menu-link" href="#">Discover</a>
-            <a class="menu-link notify" href="#">Market</a> --}}
         </div>
         <div class="search-bar">
             <input type="text" placeholder="Search">
@@ -94,8 +91,8 @@
             <div class="main-header">
                 {{!-- <a class="menu-link-main" href="#">All Apps</a> --}}
                 <div class="header-menu">
-                    <a class="main-header-link is-active" href="/home">DASHBOARD</a>
-                    <a class="main-header-link" href="/user/list-task">MY TASK</a>
+                    <a class="main-header-link" href="/home">DASHBOARD</a>
+                    <a class="main-header-link is-active" href="/user/list-task">MY TASK</a>
                     <a class="main-header-link" href="/user/my-profile">MY INFORMATION</a>
                     {{#if isPremium}}
                     <span style="color: yellow; position: absolute; right: 0; margin-right: 20px">7 days trial
@@ -107,32 +104,71 @@
                 {{#if isPremium}}
                 <div class="content-wrapper-header">
                     <div class="content-wrapper-context">
-                        <div class="content-text">Grab yourself 10 free images from Adobe Stock in a 30-day free trial
-                            plan and find perfect image, that will help you with your new project.</div>
+                        <div class="content-text">Update Premium to unblock add friend, invite your friend to do task.
+                        </div>
                         <button class="content-button"><a href="/payment/payment"
                                 style="color: white; text-decoration: none;">Update Premium</a></button>
                     </div>
                     <img class="content-wrapper-img" src="https://assets.codepen.io/3364143/glass.png" alt="">
                 </div>
                 {{/if}}
+                <div class="content-section">
+                    <div class="content-section-title">Your Active Task</div>
+                    <div class="apps-card">
+                        {{#each myTask}}
+                        <div class="app-card">
+                            <div class="status">
+                                <span class="status-circle green"></span>
+                                {{title}}
+                                <span style="font-size: 11px; opacity: 0.6;">Day start: {{createdAt}}</span>
+                            </div>
+                            {{#each description}}
+                            <div class="app-card__subtext ml-2">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="check-completed"
+                                            id="check-completed" value="checkedValue">
+                                        {{this}}
+                                    </label>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <div class="app-card-buttons">
+                                <button class="content-button status-button">Update</button>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="content-section">
+                    <div class="content-section-title">Your Completed Task</div>
+                    <div class="apps-card" style="opacity: 0.5;">
+                        {{#each myCompletedTask}}
+                        <div class="app-card">
+                            <div class="status">
+                                <span class="status-circle red"></span>
+                                {{title}}
+                                <span style="font-size: 11px; opacity: 0.6;">{{createdAt}} - {{updatedAt}}</span>
+                                {{!-- <span style="font-size: 11px; opacity: 0.6;">Day end: {{updatedAt}}</span> --}}
+                            </div>
+                            {{#each description}}
+                            <div class="app-card__subtext ml-2">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                {{this}}
+                            </div>
+                            {{/each}}
+                            {{!-- <div class="app-card-buttons">
+                                <button class="content-button status-button">Update</button>
+                            </div> --}}
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="overlay-app"></div>
     </div>
-    <div class="overlay-app"></div>
-    {{#if error}}
-    <div id="error">
-        {{error}}
-    </div>
-    {{/if}}
-    {{#if success}}
-    <div id="success">{{success}}</div>
-    {{/if}}
-</div>
-<script>
-    $(document).ready(function () {
-        setTimeout(function () {
-            $('#error').fadeOut('slow')
-            $('#success').fadeOut('slow')
-        }, 2000)
-    })
-</script>
+    <script>
+        $(document).ready(function () {
+        })
+    </script>

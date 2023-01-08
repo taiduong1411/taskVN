@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const CheckUserLogin = require('../middlewares/CheckUserLogin')
-const UserControllers = require('../controllers/UserControllers')
+const UserControllers = require('../controllers/UserController')
 
 router.get('/register', UserControllers.getRegister)
 router.get('/login', UserControllers.getLogin)
