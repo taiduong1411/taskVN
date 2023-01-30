@@ -1,8 +1,9 @@
 const express = require('express');
-const UserAPI = require('../APIs/UserAPI');
+const UserAPI = require('../APIs/UserAPI')
 const OtpAPI = require('../APIs/OTPAPI')
 const User = require('../models/User')
 const OTP = require('../models/OTP')
+const Task = require('../models/Task')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 const UserControllers = {
@@ -64,6 +65,7 @@ const UserControllers = {
                 if (user.password == password) {
                     req.session.email = email
                     req.session.level = user.level
+                    req.session.fullName = user.fullName
                     return res.redirect('/home')
                 } else {
                     req.flash('error', 'Email or Password was wrong !')
@@ -182,6 +184,22 @@ const UserControllers = {
             }
         })
     },
+    getProfile: async(req, res, next) => {
+        let user = await UserAPI.getOne({ email: req.session.email })
+        let tasks = await Task.find({ sort: 0 }).lean()
+        let TaskActiveCount = tasks.filter(tasks => tasks.personCreate == user.email && tasks.isComplete == false)
+        let TaskCompletedCount = tasks.filter(tasks => tasks.personCreate == user.email && tasks.isComplete == true)
+        return res.render('user/my-profile', {
+            fullName: user.fullName,
+            avatar: user.avatar,
+            email: user.email,
+            isPremium: (user.isPremium == true) ? false : true,
+            TaskActiveCount: TaskActiveCount.length,
+            TaskCompletedCount: TaskCompletedCount.length,
+            activeTask: TaskActiveCount,
+            completedTask: TaskCompletedCount
+        })
+    }
 
 }
 module.exports = UserControllers

@@ -46,12 +46,14 @@ const TaskAPI = {
             .then(tasks => {
                 return tasks.map(tasks => {
                     return {
+                        _id: tasks._id,
                         taskID: tasks.taskID,
                         title: tasks.title,
                         description: tasks.description,
                         personCreate: tasks.personCreate,
                         member: tasks.member,
                         isComplete: tasks.isComplete,
+                        isHide: tasks.isHide,
                         slug: tasks.slug,
                         createdAt: (tasks.createdAt).toLocaleDateString('en-GB'),
                         updatedAt: (tasks.updatedAt).toLocaleDateString('en-GB')

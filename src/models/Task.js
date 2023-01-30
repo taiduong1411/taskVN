@@ -26,6 +26,10 @@ const TaskModel = new Schema({
         type: Boolean,
         default: false
     },
+    isHide: {
+        type: Boolean,
+        default: false
+    },
     slug: {
         type: String,
         slug: 'title'

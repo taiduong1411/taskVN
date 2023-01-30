@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const CheckUserLogin = require('../middlewares/CheckUserLogin')
+const CheckPremium = require('../middlewares/CheckPremium')
 const UserControllers = require('../controllers/UserController')
 
 router.get('/register', UserControllers.getRegister)
@@ -10,6 +11,7 @@ router.get('/forgot-password', UserControllers.getForgotPassword)
 router.get('/send-code', UserControllers.getSendCode)
 router.get('/verify-code', UserControllers.getVerifyCode)
 router.get('/forgot-password-reset', UserControllers.getForgotPasswordReset)
+router.get('/my-profile', CheckUserLogin, UserControllers.getProfile)
 
 
 

@@ -358,6 +358,7 @@ body.light-mode .video-bg:before {
     -webkit-backdrop-filter: blur(20px);
     font-size: 15px;
     font-weight: 500;
+    margin: auto;
 }
 
 .header {
@@ -850,9 +851,13 @@ body.light-mode .video-bg:before {
 
 .status {
     margin-left: 16px;
-    width: 140px;
-    font-size: 15px;
+    /* display: block; */
+    /* margin: auto; */
+    /* text-align: center; */
+    width: 150px;
+    font-size: 16px;
     position: relative;
+    /* height: 100px; */
 }
 
 .status-circle {
@@ -1240,4 +1245,51 @@ body.light-mode .video-bg:before {
 
 .form-create-task .sub-title input {
     width: 80%;
+}
+
+.optionTaskCompleted {
+    float: right;
+    margin-right: -100px;
+    margin-top: -5px;
+    font-size: 18px;
+    color: white;
+    opacity: 0.6
+}
+
+@media screen and (max-width: 565px) {
+    .optionTaskCompleted {
+        margin-right: -130px;
+    }
+}
+
+.icon i {
+    float: right;
+}
+
+.profile-img-main {
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border: 2px solid var(--theme-color);
+    /* margin-left: 22px; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 14px;
+}
+
+.profile-name {
+    font-size: 22px;
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    text-transform: uppercase;
+}
+
+.profile-email {
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    margin-top: 8px;
 }

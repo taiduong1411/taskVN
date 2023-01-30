@@ -1,9 +1,9 @@
-<div class="video-bg">
+{{!-- <div class="video-bg">
     <video width="320" height="240" autoplay loop muted>
         <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-</div>
+</div> --}}
 <div class="create-task">
     <button class="btn btn-success"><a href="/user/create-task">+</a></button>
 </div>
@@ -89,9 +89,10 @@
         </div>
         <div class="main-container">
             <div class="main-header">
+                {{!-- <a class="menu-link-main" href="#">All Apps</a> --}}
                 <div class="header-menu">
-                    <a class="main-header-link is-active" href="/home">DASHBOARD</a>
-                    <a class="main-header-link" href="/user/list-task">MY TASK</a>
+                    <a class="main-header-link" href="/home">DASHBOARD</a>
+                    <a class="main-header-link is-active" href="/task/list-task">MY TASK</a>
                     <a class="main-header-link" href="/user/my-profile">MY INFORMATION</a>
                     {{#if isPremium}}
                     <span style="color: yellow; position: absolute; right: 0; margin-right: 20px">7 days trial
@@ -111,53 +112,100 @@
                     <img class="content-wrapper-img" src="https://assets.codepen.io/3364143/glass.png" alt="">
                 </div>
                 {{/if}}
+                {{!-- <div class="content-section">
+                    <div class="content-section-title">Your Active Task</div>
+                    <div class="apps-card">
+                        {{#each myTask}}
+                        <div class="app-card">
+                            <div class="status">
+                                <span class="status-circle green"></span>
+                                {{title}}
+                                <span style="font-size: 11px; opacity: 0.6;">Day start: {{createdAt}}</span>
+                            </div>
+                            {{#each description}}
+                            <div class="app-card__subtext ml-2">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="check-completed"
+                                            id="check-completed" value="checkedValue">
+                                        {{this}}
+                                    </label>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <div class="app-card-buttons">
+                                <button class="btn btn-primary"><a href="/user/list-task/{{_id}}"
+                                        style="text-decoration: none; color: white">Completed</a></button>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div> --}}
                 <div class="content-section">
-                    <div class="app-card-form">
-                        <form action="/user/create-task" method="post" class="form-create-task">
-                            <div>
-                                <input type="text" name="title" id="title" placeholder="Enter your Title Task"
-                                    class="mb-3">
-                            </div>
-                            <div class="sub-title">
-                                <span class="ml-3 mr-1 countInput"></span>
-                                <input type="text" name="task" id="task" placeholder="Enter your Title Task"
-                                    class="mb-3">
-                                <span class="ml-2 add">+</span>
-                                <span class="ml-2 d-none delete">-</span>
-                            </div>
+                    <div class="content-section-title">
+                        Your Hidden Task - <a href="/task/list-task">Back to list Active Task</a>
 
-                            {{!-- <div>
-                                <textarea name="description" id="description" cols="28" rows="3"
-                                    placeholder="Enter your Task detail"></textarea>
-                            </div> --}}
-                            {{!-- <span class="next" style="float: right; font-size: 20px; margin-right: 8px"><i
-                                    class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                            <span class="previous" style="float: left; font-size: 20px; margin-left: 8px"><i
-                                    class="fa fa-arrow-left" aria-hidden="true"></i></span>
-                            <input type="text" value="0" id="count"> --}}
-                            <div>
-                                <button style="float: right;" class="content-button status-button create-task-button"
-                                    type="submit">Create</button>
+                    </div>
+                    <div class="apps-card completed" style="opacity: 0.5;">
+                        {{#each myCompletedTask}}
+                        <div class="app-card">
+                            <div class="icon mb-3">
+                                <i class="fa fa-angle-left ml-4" aria-hidden="true"></i>
+                                <a href="/task/reactive/{{_id}}">
+                                    <i class="fa fa-refresh ml-4" aria-hidden="true"></i>
+                                </a>
+                                <a href="/task/hide-task/{{_id}}">
+                                    <i class="fa fa-eye ml-4" aria-hidden="true"></i>
+                                </a>
+                                <a href="/task/list-task/delete/{{_id}}">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
                             </div>
-                        </form>
+                            <div class="status">
+                                <span class="optionTaskCompleted">
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                                <span class="status-circle red"></span>
+                                {{title}}
+                                <span style="font-size: 11px; opacity: 0.6;">{{createdAt}} - {{updatedAt}}</span>
+                            </div>
+                            {{#each description}}
+                            <div class="app-card__subtext ml-2">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                {{this}}
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/each}}
                     </div>
                 </div>
             </div>
         </div>
+        <div class="overlay-app"></div>
     </div>
-    <div class="overlay-app"></div>
-</div>
-<script>
-    $(document).ready(function () {
-        var input = `<div class="sub-title">
-                                <span class="ml-3 mr-1 countInput"></span>
-                                <input type="text" name="task" id="task" placeholder="Enter your Title Task"
-                                    class="mb-3">
-                                <span class="ml-2 add">+</span>
-                                <span class="ml-2 d-none delete">-</span>
-                            </div>`
-        $('.add').click(function () {
-            $('.form-create-task').children('.sub-title').append(input)
+    <script>
+        $(document).ready(function () {
+            $('.icon').hide()
+            $('.optionTaskCompleted').hide()
+            $('.app-card').hover(function () {
+                var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
+                optionTaskCompleted.show()
+                $('.optionTaskCompleted').click(function () {
+                    var icon = $(this).parent().siblings('.icon')
+                    icon.show()
+                    optionTaskCompleted.hide()
+                })
+
+            }, function () {
+                var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
+                optionTaskCompleted.hide()
+                $('.icon').hide()
+            })
+            $('.fa-angle-left').click(function () {
+                $('.icon').hide()
+                var optionTaskCompleted = $(this).parent().siblings('.status').children('.optionTaskCompleted')
+                optionTaskCompleted.show()
+            })
+
         })
-    })
-</script>
+    </script>

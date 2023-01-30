@@ -9,7 +9,7 @@ const UserAPI = require('../APIs/UserAPI')
 const TaskController = {
     getCreate: async(req, res, next) => {
         let user = await UserAPI.getOne({ email: req.session.email })
-        return res.render('user/create-task', {
+        return res.render('task/create-task', {
             email: user.email,
             avatar: user.avatar,
             isPremium: (user.isPremium == true) ? false : true,
@@ -44,20 +44,68 @@ const TaskController = {
             personCreate: req.session.email
         }
         await Task(data).save()
-        return res.redirect('/user/list-task')
+        return res.redirect('/task/list-task')
     },
     getListTask: async(req, res, next) => {
         let tasks = await TaskAPI.getAll({ sort: 0 })
         let user = await UserAPI.getOne({ email: req.session.email })
         let myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
-        let myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true)
-        return res.render('user/list-task', {
+            // console.log(myTask.slice(0, 3))
+        let myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == false)
+        return res.render('task/list-task', {
             email: req.session.email,
             avatar: user.avatar,
             isPremium: (user.isPremium == true) ? false : true,
-            myTask: myTask,
-            myCompletedTask: myCompletedTask
+            myTask: myTask.slice(0, 3),
+            myCompletedTask: myCompletedTask.slice(0, 3),
+            fullName: req.session.fullName
         })
+    },
+    getDoneTask: async(req, res, next) => {
+        const idUrl = req.params.id
+        let task = await Task.findOne({ _id: idUrl }).then(task => {
+            if (!task) {
+                return res.redirect('/task/list-task')
+            } else {
+                task.isComplete = true
+                task.save()
+            }
+            return res.redirect('/task/list-task')
+        })
+    },
+    getDeleteTask: async(req, res, next) => {
+        const idUrl = req.params.id
+        await Task.findByIdAndDelete({ _id: idUrl })
+        return res.redirect('/task/list-task')
+    },
+    getHideTask: async(req, res, next) => {
+        const idUrl = req.params.id
+        await Task.findOneAndUpdate({ _id: idUrl }, { isHide: true })
+        return res.redirect('/task/list-task')
+    },
+    getShowHideTask: async(req, res, next) => {
+        let tasks = await TaskAPI.getAll({ sort: 0 })
+        let user = await UserAPI.getOne({ email: req.session.email })
+        let hideTasks = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == true)
+        let myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
+        return res.render('task/hide-task', {
+            email: req.session.email,
+            avatar: user.avatar,
+            isPremium: (user.isPremium == true) ? false : true,
+            myCompletedTask: hideTasks,
+            myTask: myTask,
+            fullName: req.session.fullName
+        })
+    },
+    getShowTask: async(req, res, next) => {
+        const idUrl = req.params.id
+        await Task.findByIdAndUpdate({ _id: idUrl }, { isHide: false })
+        return res.redirect('/task/list-task')
+    },
+    getReActive: async(req, res, next) => {
+        const idUrl = req.params.id
+        await Task.findByIdAndUpdate({ _id: idUrl }, { isComplete: false })
+        return res.redirect('/task/list-task')
     }
 }
 module.exports = TaskController

@@ -60,6 +60,7 @@ app.set('views', path.join(__dirname, 'views'));
 // index
 
 app.use('/user', UserRouter, TaskRouter)
+app.use('/task', TaskRouter)
 app.use('/payment', PaymentRouter)
 
 app.get('/get-started', async(req, res, next) => {
