@@ -1105,6 +1105,7 @@ body.light-mode .video-bg:before {
     transition: 0.3s ease;
     margin-right: 20px;
     margin-bottom: 10px;
+    min-height: 350px;
 }
 
 .app-card:hover {
@@ -1127,11 +1128,19 @@ body.light-mode .video-bg:before {
 }
 
 .app-card-buttons {
-    display: flex;
+    /* display: flex; */
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 20px 20px 0;
     align-items: center;
     margin-left: auto;
     margin-top: 16px;
+    border-radius: 8px;
 }
+
+
+/* checkbox */
 
 @media screen and (max-width: 1110px) {
     .app-card {
@@ -1249,9 +1258,9 @@ body.light-mode .video-bg:before {
 
 .optionTaskCompleted {
     float: right;
-    margin-right: -100px;
-    margin-top: -5px;
-    font-size: 18px;
+    margin-right: -90px;
+    margin-top: -4px;
+    font-size: 16px;
     color: white;
     opacity: 0.6
 }
@@ -1293,3 +1302,6 @@ body.light-mode .video-bg:before {
     text-align: center;
     margin-top: 8px;
 }
+
+
+/* loader */

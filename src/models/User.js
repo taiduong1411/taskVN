@@ -33,9 +33,12 @@ const UserModel = new Schema({
         type: String,
         required: true
     },
-    myTask: {
+    myFriend: {
         type: [String]
-    }
+    },
+    myGroupTask: {
+        type: [String]
+    },
 }, {
     timestamps: true
 })

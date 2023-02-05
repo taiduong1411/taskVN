@@ -1,4 +1,4 @@
-const Task = require('../models/Task')
+const Task = require('../models/PersonTask')
 const { options } = require('../routers/UserRouter')
 const TaskAPI = {
     getOne: async(options) => {

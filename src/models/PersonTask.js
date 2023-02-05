@@ -37,4 +37,4 @@ const TaskModel = new Schema({
 }, {
     timestamps: true
 })
-module.exports = mongoose.model('Task', TaskModel)
+module.exports = mongoose.model('PersonTask', TaskModel)

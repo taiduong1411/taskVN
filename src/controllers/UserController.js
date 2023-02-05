@@ -3,7 +3,7 @@ const UserAPI = require('../APIs/UserAPI')
 const OtpAPI = require('../APIs/OTPAPI')
 const User = require('../models/User')
 const OTP = require('../models/OTP')
-const Task = require('../models/Task')
+const Task = require('../models/PersonTask')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 const UserControllers = {
@@ -66,6 +66,8 @@ const UserControllers = {
                     req.session.email = email
                     req.session.level = user.level
                     req.session.fullName = user.fullName
+                    req.session.isPremium = user.isPremium
+                    req.session.avatar = user.avatar
                     return res.redirect('/home')
                 } else {
                     req.flash('error', 'Email or Password was wrong !')

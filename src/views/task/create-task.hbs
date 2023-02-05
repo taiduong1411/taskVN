@@ -19,9 +19,6 @@
         <div class="header-menu">
             <a class="menu-link is-active" href="/home">Home</a>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-        </div>
         <div class="header-profile">
             <div class="notification">
                 <span class="notification-number">3</span>
@@ -124,17 +121,9 @@
                                     class="mb-3">
                                 <span class="ml-2 add">+</span>
                                 <span class="ml-2 d-none delete">-</span>
-                            </div>
 
-                            {{!-- <div>
-                                <textarea name="description" id="description" cols="28" rows="3"
-                                    placeholder="Enter your Task detail"></textarea>
-                            </div> --}}
-                            {{!-- <span class="next" style="float: right; font-size: 20px; margin-right: 8px"><i
-                                    class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                            <span class="previous" style="float: left; font-size: 20px; margin-left: 8px"><i
-                                    class="fa fa-arrow-left" aria-hidden="true"></i></span>
-                            <input type="text" value="0" id="count"> --}}
+
+                            </div>
                             <div>
                                 <button style="float: right;" class="content-button status-button create-task-button"
                                     type="submit">Create</button>
@@ -147,6 +136,7 @@
     </div>
     <div class="overlay-app"></div>
 </div>
+
 <script>
     $(document).ready(function () {
         var input = `<div class="sub-title">
@@ -156,8 +146,15 @@
                     
                                 <span class="ml-2 d-none delete">-</span>
                             </div>`
+        var toast = `<div class="ml-4" style="opacity: 0.5;">Please update to create more task !</div>`
+        var i = 1
         $('.add').click(function () {
             $('.form-create-task').children('.sub-title').append(input)
+            i = i + 1
+            if (i > 3) {
+                $('.form-create-task').children('.sub-title').append(toast)
+                $('.add').addClass('d-none')
+            }
         })
     })
 </script>

@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser')
 const flash = require('express-flash')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
+const MongoStore = require('connect-mongo')
 const port = process.env.PORT || 3000
 database.connect();
 // CONTROLLERS
@@ -28,7 +29,7 @@ const TaskRouter = require('./routers/TaskRouter')
 // MODELS
 const User = require('./models/User');
 const OTP = require('./models/OTP')
-const Task = require('./models/Task')
+const Task = require('./models/PersonTask')
 
 // API
 const UserAPI = require('./APIs/UserAPI');
@@ -52,7 +53,14 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cookieParser('ddn'));
-app.use(session({ cookie: { maxAge: 100000 } }));
+// app.use(session({ cookie: { maxAge: 100000 } }));
+app.use(session({
+    cookie: { maxAge: (1000 * 60 * 40) },
+    secret: 'foo',
+    store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://taiduong:taiduong1411@taiduong.28espap.mongodb.net/taskVN?retryWrites=true&w=majority'
+    })
+}));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));

@@ -12,7 +12,13 @@ router.get('/list-task/hide/:id', CheckUserLogin, TaskController.getHideTask)
 router.get('/hide-task', CheckUserLogin, TaskController.getShowHideTask)
 router.get('/hide-task/:id', CheckUserLogin, TaskController.getShowTask)
 router.get('/reactive/:id', CheckUserLogin, TaskController.getReActive)
+router.get('/search', CheckUserLogin, TaskController.getSearch)
+router.get('/update/:id', CheckUserLogin, TaskController.getUpdate)
+router.get('/company/company', CheckUserLogin, CheckPremium, TaskController.getCompanyTask)
+router.get('/group/group-task', CheckUserLogin, CheckPremium, TaskController.getGroupTask)
+router.get('/group/create', CheckUserLogin, CheckPremium, TaskController.getGroupCreate)
 
 
 router.post('/create-task', CheckUserLogin, TaskController.postTask)
+router.post('/group/create', CheckUserLogin, CheckPremium, TaskController.postGroupCreate)
 module.exports = router

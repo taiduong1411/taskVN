@@ -1,9 +1,3 @@
-{{!-- <div class="video-bg">
-    <video width="320" height="240" autoplay loop muted>
-        <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div> --}}
 <div class="create-task">
     <button class="btn btn-success"><a href="/user/create-task">+</a></button>
 </div>
@@ -20,7 +14,9 @@
             <a class="menu-link is-active" href="/home">Home</a>
         </div>
         <div class="search-bar">
-            <input type="text" placeholder="Search">
+            <form action="/task/search" method="get">
+                <input type="text" placeholder="Search" style="width: 400px;" name="title">
+            </form>
         </div>
         <div class="header-profile">
             <div class="notification">
@@ -47,20 +43,23 @@
                 </div>
                 <div class="side-title">Resource Links</div>
                 <div class="side-menu">
-                    <a href="#">
-                        <svg viewBox="0 0 512 512" fill="currentColor">
+                    <a href="/task/company/company">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-building" viewBox="0 0 16 16">
                             <path
-                                d="M467 0H45C20.186 0 0 20.186 0 45v422c0 24.814 20.186 45 45 45h422c24.814 0 45-20.186 45-45V45c0-24.814-20.186-45-45-45zM181 241c41.353 0 75 33.647 75 75s-33.647 75-75 75-75-33.647-75-75c0-8.291 6.709-15 15-15s15 6.709 15 15c0 24.814 20.186 45 45 45s45-20.186 45-45-20.186-45-45-45c-41.353 0-75-33.647-75-75s33.647-75 75-75 75 33.647 75 75c0 8.291-6.709 15-15 15s-15-6.709-15-15c0-24.814-20.186-45-45-45s-45 20.186-45 45 20.186 45 45 45zm180 120h30c8.291 0 15 6.709 15 15s-6.709 15-15 15h-30c-24.814 0-45-20.186-45-45V211h-15c-8.291 0-15-6.709-15-15s6.709-15 15-15h15v-45c0-8.291 6.709-15 15-15s15 6.709 15 15v45h45c8.291 0 15 6.709 15 15s-6.709 15-15 15h-45v135c0 8.276 6.724 15 15 15z" />
-                        </svg> Stock
-                    </a>
-                    <a href="#">
-                        <svg viewBox="0 0 511.441 511.441" fill="currentColor">
-                            <path d="M255.721 347.484L90.22 266.751v106.57l165.51 73.503 165.509-73.503V266.742z" />
+                                d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z" />
                             <path
-                                d="M511.441 189.361L255.721 64.617 0 189.361l255.721 124.744 195.522-95.378v111.032h30V204.092z" />
-                        </svg> Tutorials
+                                d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z" />
+                        </svg> Company Task
                     </a>
-                    <a href="#">
+                    <a href="/task/group/group-task">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-people" viewBox="0 0 16 16">
+                            <path
+                                d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                        </svg> Group Task
+                    </a>
+                    {{!-- <a href="#">
                         <svg viewBox="0 0 512 512" fill="currentColor">
                             <path d="M196 151h-75v90h75c24.814 0 45-20.186 45-45s-20.186-45-45-45z" />
                             <path
@@ -74,7 +73,7 @@
                             <path
                                 d="M436 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h361c41.352 0 76-33.648 76-75V75c0-41.352-34.648-75-76-75zM286 151h120v30H286zm-45 150c0 33.09-26.91 60-60 60H91V151h90c33.09 0 60 26.91 60 60 0 18.008-8.133 33.996-20.73 45 12.597 11.004 20.73 26.992 20.73 45zm180 0H303.562c6.196 17.46 22.883 30 42.438 30 16.012 0 30.953-8.629 38.992-22.516l25.957 15.032C397.58 346.629 372.687 361 346 361c-41.352 0-75-33.648-75-75s33.648-75 75-75 75 33.648 75 75zm0 0" />
                         </svg> Behance
-                    </a>
+                    </a> --}}
                     <a href="/user/logout">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-box-arrow-right" viewBox="0 0 16 16">
@@ -116,9 +115,10 @@
                     <div class="apps-card">
                         {{#each myTask}}
                         <div class="app-card">
+
                             <div class="status">
                                 <span class="status-circle green"></span>
-                                {{title}}
+                                <div>{{title}}</div>
                                 <span style="font-size: 11px; opacity: 0.6;">Day start: {{createdAt}}</span>
                             </div>
                             {{#each description}}
@@ -133,6 +133,8 @@
                             <div class="app-card-buttons">
                                 <button class="btn btn-primary"><a href="/user/list-task/{{_id}}"
                                         style="text-decoration: none; color: white">Completed</a></button>
+                                <button class="btn btn-success" id="btn_update"><a href="/task/update/{{_id}}"
+                                        style="text-decoration: none; color: white">Update</a></button>
                             </div>
                         </div>
                         {{/each}}
@@ -179,29 +181,85 @@
         </div>
         <div class="overlay-app"></div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('.icon').hide()
-            $('.optionTaskCompleted').hide()
-            $('.app-card').hover(function () {
-                var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
-                optionTaskCompleted.show()
-                $('.optionTaskCompleted').click(function () {
-                    var icon = $(this).parent().siblings('.icon')
-                    icon.show()
-                    optionTaskCompleted.hide()
-                })
+</div>
+<div class="content-section d-none" style="
+width: 65%;
+margin: auto;
+position: absolute;
+left: 0;
+right: 0;
+top:0;
+bottom: 0;">
+    <div class="app-card-form" style="background-color: rgb(146 151 179/40%);">
+        <form action="/task/create-task" method="post" class="form-create-task">
+            <div>
+                <input type="text" name="title" id="title" placeholder="Enter your Title Task" class="mb-3">
+            </div>
+            <div class="sub-title">
+                <span class="ml-3 mr-1 countInput"></span>
+                <input type="text" name="task" id="task" placeholder="Enter your Title Task" class="mb-3">
+                <span class="ml-2 add">+</span>
+                <span class="ml-2 d-none delete">-</span>
 
-            }, function () {
-                var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
+
+            </div>
+            <div>
+                <button style="float: right;" class="content-button status-button create-task-button"
+                    type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.icon').hide()
+        $('.optionTaskCompleted').hide()
+        $('.app-card').hover(function () {
+            var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
+            optionTaskCompleted.show()
+            $('.optionTaskCompleted').click(function () {
+                var icon = $(this).parent().siblings('.icon')
+                icon.show()
                 optionTaskCompleted.hide()
-                $('.icon').hide()
-            })
-            $('.fa-angle-left').click(function () {
-                $('.icon').hide()
-                var optionTaskCompleted = $(this).parent().siblings('.status').children('.optionTaskCompleted')
-                optionTaskCompleted.show()
             })
 
+        }, function () {
+            var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
+            optionTaskCompleted.hide()
+            $('.icon').hide()
         })
-    </script>
+        $('.fa-angle-left').click(function () {
+            $('.icon').hide()
+            var optionTaskCompleted = $(this).parent().siblings('.status').children('.optionTaskCompleted')
+            optionTaskCompleted.show()
+        })
+        /*
+        $('#btn_update').click(function (event) {
+            $('.app').css('opacity', '0.09')
+            $('.content-section').removeClass('d-none')
+        })
+        */
+
+
+
+        var input = `<div class="sub-title">
+                                <span class="ml-3 mr-1 countInput"></span>
+                                <input type="text" name="task" id="task" placeholder="Enter your Title Task"
+                                    class="mb-3">
+                    
+                                <span class="ml-2 d-none delete">-</span>
+                            </div>`
+        var toast = `<div class="ml-4" style="opacity: 0.5;">Please update to create more task !</div>`
+        var i = 1
+        $('.add').click(function () {
+            $('.form-create-task').children('.sub-title').append(input)
+            i = i + 1
+            if (i > 3) {
+                $('.form-create-task').children('.sub-title').append(toast)
+                $('.add').addClass('d-none')
+            }
+        })
+
+    })
+</script>
