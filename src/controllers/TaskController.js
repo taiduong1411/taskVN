@@ -3,6 +3,7 @@ const User = require('../models/User')
 const TaskAPI = require('../APIs/TaskAPI')
 const express = require('express')
 const UserAPI = require('../APIs/UserAPI')
+const PersonTask = require('../models/PersonTask')
 
 
 
@@ -38,37 +39,89 @@ const TaskController = {
                 return res.json({ "success": "task was created" })
             }
         }
+        let descriptions = [];
+        task.forEach(item => {
+            let taskDetail = {
+                taskName: item
+            }
+            descriptions.push(taskDetail)
+        });
+
         let data = {
             taskID: code,
             title: title,
-            description: task,
+            description: descriptions,
             personCreate: req.session.email
         }
         await Task(data).save()
         return res.redirect('/task/list-task')
     },
     getListTask: async(req, res, next) => {
-        let tasks = await TaskAPI.getAll({ sort: 0 })
-            // let user = await UserAPI.getOne({ email: req.session.email })
-        let myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
-            // console.log(myTask.slice(0, 3))
-        let myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == false)
+        var tasks = await TaskAPI.getAll({ sort: 0 })
+            // var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
+        for (var i = 0; i < tasks.length; i++) {
+            var k = 0
+            for (var j = 0; j < tasks[i].description.length; j++) {
+                if (tasks[i].description[j].isFinish == true) {
+                    k = k + 1
+                } else {
+                    k = k + 0
+                }
+            }
+            if (k == tasks[i].description.length) {
+                const _id = (tasks[i]._id).toString()
+                await Task.findOne({ _id: _id }).then(task => {
+                    if (!task) {
+                        return res.redirect('/404')
+                    } else {
+                        task.isComplete = true
+                        task.save()
+                    }
+                })
+            }
+        }
+        var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
+        var myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == false)
         return res.render('task/list-task', {
             email: req.session.email,
             avatar: req.session.avatar,
             isPremium: (req.session.isPremium == true) ? false : true,
             myTask: myTask.slice(0, 3),
             myCompletedTask: myCompletedTask.slice(0, 3),
-            fullName: req.session.fullName
+            fullName: req.session.fullName,
         })
+    },
+    getCheckDone: async(req, res, next) => {
+        const idUrl = req.params.id
+        let tasks = await TaskAPI.getAll({ sort: 0 })
+        for (var i = 0; i < tasks.length; i++) {
+            for (var j = 0; j < tasks[i].description.length; j++) {
+                var _id = (tasks[i].description[j]._id).toString()
+                if (_id == idUrl) {
+                    let _idTask = (tasks[i]._id).toString()
+                    let update = tasks[i].description[j].isFinish = true
+                    let description_ = tasks[i].description[j].isFinish
+                    let data = tasks[i].description
+                        // console.log(data)
+                    await PersonTask.findByIdAndUpdate(_idTask, { description: data })
+                }
+            }
+        }
+        return res.redirect('/task/list-task')
     },
     getDoneTask: async(req, res, next) => {
         const idUrl = req.params.id
-        let task = await Task.findOne({ _id: idUrl }).then(task => {
+        let task = await Task.findOne({ _id: idUrl }).then(async task => {
             if (!task) {
-                return res.redirect('/task/list-task')
+                return res.redirect('/404')
             } else {
                 task.isComplete = true
+                for (var i = 0; i < task.description.length; i++) {
+                    let update = task.description[i].isFinish = true
+                    let description_ = task.description[i].isFinish
+                    let data = task.description
+                    await PersonTask.findByIdAndUpdate(idUrl, { description: data })
+                }
                 task.save()
             }
             return res.redirect('/task/list-task')
@@ -105,7 +158,15 @@ const TaskController = {
     },
     getReActive: async(req, res, next) => {
         const idUrl = req.params.id
-        await Task.findByIdAndUpdate({ _id: idUrl }, { isComplete: false })
+        await Task.findByIdAndUpdate({ _id: idUrl }, { isComplete: false }).then(async task => {
+            for (var i = 0; i < task.description.length; i++) {
+                let update = task.description[i].isFinish = false
+                let description_ = task.description[i].isFinish
+                let data = task.description
+                await PersonTask.findByIdAndUpdate(idUrl, { description: data })
+            }
+            // console.log(task.description)
+        })
         return res.redirect('/task/list-task')
     },
     getSearch: async(req, res, next) => {
@@ -153,32 +214,7 @@ const TaskController = {
     },
     getCompanyTask: async(req, res, next) => {
         return res.render('task/company/company')
-    },
-    getGroupTask: async(req, res, next) => {
-        let user = await UserAPI.getOne({ email: req.session.email })
-        if (user.myGroupTask == '') {
-            return res.render('task/group/group-task', {
-                avatar: req.session.avatar,
-                toast: true
-            })
-        }
-        return res.render('task/group/group-task', {
-            avatar: req.session.avatar
-        })
-    },
-    getGroupCreate: async(req, res, next) => {
-        return res.render('task/group/create')
-    },
-    postGroupCreate: async(req, res, next) => {
-        const { groupName } = req.body
-        let user = await UserAPI.getOne({ email: req.session.email }).then(user => {
-            if (!user) {
-                return res.redirect('/task/group/group-task')
-            }
-            user.myGroupTask
-        })
-
-        return res.redirect('/task/group/group-task')
     }
+
 }
 module.exports = TaskController

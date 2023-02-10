@@ -37,7 +37,13 @@ const UserModel = new Schema({
         type: [String]
     },
     myGroupTask: {
-        type: [String]
+        type: [{
+            gid: String,
+            groupName: String,
+            member: {
+                email: [String]
+            }
+        }]
     },
 }, {
     timestamps: true

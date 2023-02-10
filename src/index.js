@@ -16,20 +16,23 @@ database.connect();
 const UserController = require('./controllers/UserController')
 const PaymentController = require('./controllers/PaymentController')
 const TaskController = require('./controllers/TaskController')
+const GroupTaskController = require('./controllers/GroupTaskController')
 
 
 
 
 // ROUTER
-const UserRouter = require('./routers/UserRouter');
-const PaymentRouter = require('./routers/PaymentRouter');
+const UserRouter = require('./routers/UserRouter')
+const PaymentRouter = require('./routers/PaymentRouter')
 const TaskRouter = require('./routers/TaskRouter')
+const GroupTaskRouter = require('./routers/GroupTaskRouter')
 
 
 // MODELS
 const User = require('./models/User');
 const OTP = require('./models/OTP')
 const Task = require('./models/PersonTask')
+    // const GroupTask = require('./models/Group')
 
 // API
 const UserAPI = require('./APIs/UserAPI');
@@ -68,7 +71,7 @@ app.set('views', path.join(__dirname, 'views'));
 // index
 
 app.use('/user', UserRouter, TaskRouter)
-app.use('/task', TaskRouter)
+app.use('/task', TaskRouter, GroupTaskRouter)
 app.use('/payment', PaymentRouter)
 
 app.get('/get-started', async(req, res, next) => {

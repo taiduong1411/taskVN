@@ -2,6 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const slug = require('mongoose-slug-generator')
 mongoose.plugin(slug)
+const taskDetail = new Schema({
+    taskName: String,
+    isFinish: {
+        type: Boolean,
+        default: false
+    }
+});
 const TaskModel = new Schema({
     taskID: {
         type: String,
@@ -13,7 +20,7 @@ const TaskModel = new Schema({
         required: true
     },
     description: {
-        type: [Object]
+        type: [taskDetail]
     },
     personCreate: {
         type: String,

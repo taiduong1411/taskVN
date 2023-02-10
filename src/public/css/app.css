@@ -1108,6 +1108,22 @@ body.light-mode .video-bg:before {
     min-height: 350px;
 }
 
+.app-card-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 16px;
+    background-color: var(--content-bg);
+    border-radius: 14px;
+    border: 1px solid var(--theme-bg-color);
+    padding: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
 .app-card:hover {
     transform: scale(1.02);
     background-color: var(--theme-bg-color);

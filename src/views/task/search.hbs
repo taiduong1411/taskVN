@@ -123,15 +123,36 @@
                             {{#each description}}
                             <div class="app-card__subtext">
                                 <div class="form-check">
-                                    <label class="form-check-label">
-                                        {{this}}
+                                    <label for="check-task" class="form-check-label">
+                                        {{#if isFinish}}
+                                        <span class="taskName" style="opacity: 0.1;">{{taskName}}</span>
+                                        {{else}}
+                                        <span class="taskName">{{taskName}}</span>
+                                        {{/if}}
                                     </label>
+                                    {{#if isFinish}}
+                                    <a href="/task/check-done/{{_id}}" class="check-done"
+                                        style="color: green; opacity:0.8; pointer-events: none;">
+                                        <i class="fa fa-check" aria-hidden="true" style="position: absolute; right: 0;">
+                                        </i>
+                                    </a>
+                                    {{else}}
+                                    <a href="/task/check-done/{{_id}}" class="check-done"
+                                        style="color: white; opacity:0.5;">
+                                        <i class="fa fa-check" aria-hidden="true"
+                                            style="position: absolute; right: 0; opacity: 0.5">
+                                        </i>
+                                    </a>
+                                    {{/if}}
+
                                 </div>
                             </div>
                             {{/each}}
                             <div class="app-card-buttons">
                                 <button class="btn btn-primary"><a href="/user/list-task/{{_id}}"
                                         style="text-decoration: none; color: white">Completed</a></button>
+                                <button class="btn btn-success" id="btn_update"><a href="/task/update/{{_id}}"
+                                        style="text-decoration: none; color: white">Update</a></button>
                             </div>
                         </div>
                         {{/each}}

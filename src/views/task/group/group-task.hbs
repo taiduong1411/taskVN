@@ -40,41 +40,32 @@
             <button class=""><a href="/task/group/create">Create</a></button>
         </div>
         {{/if}}
-        {{!-- <div class="main-container">
+        <div class="main-container">
             <div class="content-wrapper">
-                <div class="content-section">
-                    <div class="content-section-title">Your Active Task</div>
-                    <div class="apps-card">
-                        {{#each group}}
-                        <div class="app-card">
-
-                            <div class="status">
-                                <span class="status-circle green"></span>
-                                <div>{{}}</div>
-                                <span style="font-size: 11px; opacity: 0.6;">Day start: {{createdAt}}</span>
-                            </div>
-                            {{#each description}}
-                            <div class="app-card__subtext">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        {{this}}
-                                    </label>
+                <div class="row">
+                    <div class="col-3" style="height: 610px; border: 1px solid red;">
+                        <div class="content-section">
+                            <div class="content-section-title">Your Group</div>
+                            <div class="apps-card">
+                                {{#each data}}
+                                <div class="app-card-group">
+                                    <div class="status">
+                                        <div>{{groupName}}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            {{/each}}
-                            <div class="app-card-buttons">
-                                <button class="btn btn-primary"><a href="/user/list-task/{{_id}}"
-                                        style="text-decoration: none; color: white">Completed</a></button>
-                                <button class="btn btn-success" id="btn_update"><a href="/task/update/{{_id}}"
-                                        style="text-decoration: none; color: white">Update</a></button>
+                                {{/each}}
                             </div>
                         </div>
+                    </div>
+                    <div class="col-9" style="border: 1px solid red">
+                        {{#each data}}
+                        <div>{{groupName}}</div>
                         {{/each}}
                     </div>
                 </div>
 
             </div>
-        </div> --}}
+        </div>
     </div>
     <div class="overlay-app"></div>
 </div>
