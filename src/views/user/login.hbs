@@ -20,34 +20,35 @@
                     <button type="submit" name="submit" class="input-submit">Sign In</button>
                 </div>
                 <div>
-                    <a href="/user/forgot-password" class="text text-links">Forgot Password</a>
+                    <a href="/user/forgot-password" class="text text-links">Forgot Password ?</a>
                 </div>
             </form>
-            {{!-- <div class="striped">
+            <div class="striped mt-5">
                 <span class="striped-line"></span>
                 <span class="striped-text">Or</span>
                 <span class="striped-line"></span>
             </div>
             <div class="method">
                 <div class="method-control">
-                    <a href="#" class="method-action">
-                        <i class="ion ion-logo-google"></i>
-                        <span>Sign in with Google</span>
-                    </a>
+                    <button class="login-with-google-btn" style="display: block; margin: auto;">
+                        <a href="/auth/google" class="text-decoration-none" style="color: black;">Sign In With
+                            Google</a>
+                    </button>
                 </div>
                 <div class="method-control">
-                    <a href="#" class="method-action">
-                        <i class="ion ion-logo-facebook"></i>
-                        <span>Sign in with Facebook</span>
-                    </a>
+                    <button class="login-with-facebook-btn" style="display: block; margin: auto;">
+                        <a href="https://facebook.com/taiduong1411" class="text-decoration-none"
+                            style="color: black;">Sign In With
+                            Facebook</a>
+                    </button>
                 </div>
-                <div class="method-control">
+                {{!-- <div class="method-control">
                     <a href="#" class="method-action">
-                        <i class="ion ion-logo-apple"></i>
-                        <span>Sign in with Apple</span>
+                        <i class="bi bi-facebook mr-2" style="line-height: 10px;"></i>
+                        <span style="width:fit-content">Sign in with Facebook</span>
                     </a>
-                </div>
-            </div> --}}
+                </div> --}}
+            </div>
         </section>
     </div>
     {{#if error}}

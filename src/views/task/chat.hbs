@@ -1,0 +1,166 @@
+<div class="create-task">
+    <button class="btn btn-success"><a href="/user/create-task">+</a></button>
+</div>
+<div class="dark-light">
+    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+    </svg>
+</div>
+<div class="app">
+    <div class="header">
+        <div class="menu-circle"></div>
+        <div class="header-menu">
+            <a class="menu-link is-active" href="/home">Home</a>
+        </div>
+        <div class="search-bar">
+            <form action="/task/search" method="get">
+                <input type="text" placeholder="Search" style="width: 400px;" name="title">
+            </form>
+        </div>
+        <div class="header-profile">
+            <div class="notification">
+                <span class="notification-number">3</span>
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+                </svg>
+            </div>
+            <svg viewBox="0 0 512 512" fill="currentColor">
+                <path
+                    d="M448.773 235.551A135.893 135.893 0 00451 211c0-74.443-60.557-135-135-135-47.52 0-91.567 25.313-115.766 65.537-32.666-10.59-66.182-6.049-93.794 12.979-27.612 19.013-44.092 49.116-45.425 82.031C24.716 253.788 0 290.497 0 331c0 7.031 1.703 13.887 3.006 20.537l.015.015C12.719 400.492 56.034 436 106 436h300c57.891 0 106-47.109 106-105 0-40.942-25.053-77.798-63.227-95.449z" />
+            </svg>
+            <img class="profile-img" src="{{avatar}}" alt="{{avatar}}">
+        </div>
+    </div>
+    <div class="wrapper">
+        {{#if toast}}
+        <div style="opacity: 0.7; margin: auto; font-size: 20px; color: white;">If you don't have Group
+            <br>
+            <button class=""><a href="/task/group/create">Create</a></button>
+        </div>
+        {{else}}
+        <div class="main-container">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-3" style="height: 610px; border-right: 1px solid rgb(93, 93, 93)">
+                        <a href="/task/list-task" style="color: white;"><i class="fa fa-arrow-left"
+                                aria-hidden="true"></i></a>
+                        <div style="display: flex;" class="mt-3">
+                            <div>
+                                <i class="fa fa-plus createGroup_icon mr-3" aria-hidden="true"></i>
+                            </div>
+                            {{!-- {{#each list_friends}}
+                            <div class="container-list-friends" style="width: 80px;">
+
+                                <a href="/task/chat">
+                                    <img class="list-friends" src="{{avatar}}" alt="{{avatar}}" style="margin:auto;">
+                                </a>
+                                <i class="bi bi-circle-fill"></i>
+                                <span class="friends-name" style="width:max-content">
+                                    {{fullName}}
+                                </span>
+
+                            </div>
+                            {{/each}} --}}
+                        </div>
+                        <div class="create d-none">
+                            <form action="/task/group/create" method="post">
+                                <input type="text" name="groupName" id="groupName">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="content-section">
+                            <div class="content-section-title">Your Chat</div>
+                            <div class="apps-card">
+                                {{!-- {{#each data}}
+                                <div class="app-card-group">
+                                    <span class="groupName_">{{groupName}}</span>
+                                </div>
+                                {{/each}} --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        {{!-- <form id="msgForm">
+                        </form> --}}
+                        <div>
+                            {{#if data}}
+                            <div>
+                                <div style=" position: relative;">
+                                    {{#if isLogin}}
+                                    <i class="bi bi-circle-fill mr-1" style="font-size: 6px; color: green;"></i>
+
+                                    <img src="{{data.avatar}}" alt="{{data.avatar}}" class="mr-2"
+                                        style="width: 40px; height: 40px; border-radius: 50%; display: inline; border: 2px solid green">
+                                    {{else}}
+                                    <i class="bi bi-circle-fill mr-1" style="font-size: 6px; color: gray;"></i>
+
+                                    <img src="{{data.avatar}}" alt="{{data.avatar}}" class="mr-2"
+                                        style="width: 40px; height: 40px; border-radius: 50%; display: inline; border: 2px solid white">
+                                    {{/if}}
+                                    <span id="fullName"
+                                        style="display: inline; position: absolute; top: 0;">{{data.fullName}}</span>
+                                    {{!-- <span class="" id="idFriend">{{data.id}}</span> --}}
+                                    {{#if isLogin}}
+                                    <span style="position: absolute; bottom: 0; font-size: 12px; opacity: 0.6"
+                                        class="">Online</span>
+                                    {{else}}
+                                    <span style="position: absolute; bottom: 0; font-size: 12px; opacity: 0.6"
+                                        class="">Offline</span>
+                                    {{/if}}
+                                    <span style="position: absolute; right: 0;" class="chat-setting">
+                                        <i class="fa fa-bars" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            {{/if}}
+                        </div>
+                        {{!-- <form action="" id="msgForm">
+                        </form> --}}
+                        <input type="text" name="msg" id="messages"
+                            style="position: absolute; bottom:0; width: 93%; height: 30px; border-radius: 10px; padding: 22px 10px; background-color: var(--content-bg); border: none; color: white;">
+                        <button class="btn btn-primary btn-sendMessages"
+                            style="position: absolute; bottom:0; right: 0; margin-bottom: 3px;"
+                            onclick="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                        <div id="messages_data" class="mt-3">
+                            {{!-- <span id="test">test</span> --}}
+                            {{!-- {{#if idUrl}} --}}
+                            {{!-- <span class="" id="idUrl">{s{idUrl}}</span> --}}
+                            {{!-- {{/if}} --}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    <div class="overlay-app"></div>
+</div>
+</div>
+<script src="/js/socketClient.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.createGroup_icon').click(function () {
+            $('.createGroup_icon').hide()
+            $('.create').removeClass('d-none')
+        })
+        $('.app-card-group').click(function () {
+            var groupInformation = $(this).children('.groupName_').text()
+            alert(groupInformation)
+        })
+        $('.app-card-group').hover(function () {
+            var groupInformation = $(this)
+            groupInformation.addClass('background-hover')
+        }, function () {
+            var groupInformation = $(this)
+            groupInformation.removeClass('background-hover')
+        })
+        $('.chat-setting').click(function () {
+            alert('pass')
+        })
+    })
+</script>

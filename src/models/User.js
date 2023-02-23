@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const UserModel = new Schema({
+    googleID: {
+        type: String
+    },
     fullName: {
         type: String,
         required: true,
@@ -16,13 +19,15 @@ const UserModel = new Schema({
     },
     address: {
         type: String,
-        required: true
     },
     phoneNumber: {
         type: String,
-        required: true
     },
     isPremium: {
+        type: Boolean,
+        default: false
+    },
+    isLogin: {
         type: Boolean,
         default: false
     },
@@ -31,7 +36,6 @@ const UserModel = new Schema({
     },
     password: {
         type: String,
-        required: true
     },
     myFriend: {
         type: [String]

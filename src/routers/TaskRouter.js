@@ -15,6 +15,7 @@ router.get('/reactive/:id', CheckUserLogin, TaskController.getReActive)
 router.get('/search', CheckUserLogin, TaskController.getSearch)
 router.get('/update/:id', CheckUserLogin, TaskController.getUpdate)
 router.get('/check-done/:id', CheckUserLogin, TaskController.getCheckDone)
+router.get('/chat/:id', CheckUserLogin, CheckPremium, TaskController.getChat_Friend)
 
 
 

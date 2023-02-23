@@ -59,6 +59,8 @@ const TaskController = {
     getListTask: async(req, res, next) => {
         var tasks = await TaskAPI.getAll({ sort: 0 })
             // var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
+        var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
+        var myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == false)
         for (var i = 0; i < tasks.length; i++) {
             var k = 0
             for (var j = 0; j < tasks[i].description.length; j++) {
@@ -80,8 +82,6 @@ const TaskController = {
                 })
             }
         }
-        var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
-        var myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == false)
         return res.render('task/list-task', {
             email: req.session.email,
             avatar: req.session.avatar,
@@ -100,9 +100,7 @@ const TaskController = {
                 if (_id == idUrl) {
                     let _idTask = (tasks[i]._id).toString()
                     let update = tasks[i].description[j].isFinish = true
-                    let description_ = tasks[i].description[j].isFinish
                     let data = tasks[i].description
-                        // console.log(data)
                     await PersonTask.findByIdAndUpdate(_idTask, { description: data })
                 }
             }
@@ -214,7 +212,28 @@ const TaskController = {
     },
     getCompanyTask: async(req, res, next) => {
         return res.render('task/company/company')
-    }
+    },
+    getChat_Friend: async(req, res, next) => {
+        const idFriend = req.params.id
+        await User.findOne({ _id: idFriend }).then(async user => {
+            if (!user) {
+                return res.redirect('/404')
+            } else {
+                let data = {
+                        fullName: user.fullName,
+                        avatar: user.avatar,
+                        id: idFriend
+                    }
+                    // console.log(data)
+                return res.render('task/chat', {
+                    data: data,
+                    isLogin: user.isLogin,
+                    avatar: req.session.avatar,
+                    idUrl: idFriend
+                })
+            }
+        })
+    },
 
 }
 module.exports = TaskController

@@ -39,60 +39,89 @@
             <br>
             <button class=""><a href="/task/group/create">Create</a></button>
         </div>
-        {{/if}}
+        {{else}}
         <div class="main-container">
             <div class="content-wrapper">
                 <div class="row">
-                    <div class="col-3" style="height: 610px; border: 1px solid red;">
+                    <div class="col-3" style="height: 610px; border-right: 1px solid rgb(93, 93, 93)">
+                        <a href="/task/list-task" style="color: white;"><i class="fa fa-arrow-left"
+                                aria-hidden="true"></i></a>
+                        <div style="display: flex;" class="mt-3">
+                            <div>
+                                <i class="fa fa-plus createGroup_icon mr-3" aria-hidden="true"></i>
+                            </div>
+                            {{#each list_friends}}
+                            <div class="container-list-friends" style="width: 80px;">
+                                {{!-- {{#if isLogin}} --}}
+                                <a href="/task/chat/{{_id}}">
+                                    <img class="list-friends" src="{{avatar}}" alt="{{avatar}}" style="margin:auto;">
+                                </a>
+                                <i class="bi bi-circle-fill"></i>
+                                <span class="friends-name" style="width:max-content">
+                                    {{fullName}}
+                                </span>
+                                {{!-- {{/if}} --}}
+                            </div>
+                            {{/each}}
+                        </div>
+                        <div class="create d-none">
+                            <form action="/task/group/create" method="post">
+                                <input type="text" name="groupName" id="groupName">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
                         <div class="content-section">
                             <div class="content-section-title">Your Group</div>
                             <div class="apps-card">
                                 {{#each data}}
                                 <div class="app-card-group">
-                                    <div class="status">
-                                        <div>{{groupName}}</div>
-                                    </div>
+                                    <span class="groupName_">{{groupName}}</span>
                                 </div>
                                 {{/each}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-9" style="border: 1px solid red">
-                        {{#each data}}
-                        <div>{{groupName}}</div>
-                        {{/each}}
+                    <div class="col-9">
+                        {{!-- <form id="msgForm">
+                        </form> --}}
+                        <div>
+                            <span id="test">hi test</span>
+                        </div>
+                        <input type="text" name="messages" id="messages"
+                            style="position: absolute; bottom:0; width: 93%; height: 30px; border-radius: 10px; padding: 22px 10px; background-color: var(--content-bg); border: none; color: white;">
+                        <button class="btn btn-primary"
+                            style="position: absolute; bottom:0; right: 0; margin-bottom: 3px;"
+                            onclick="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                     </div>
                 </div>
 
             </div>
         </div>
+        {{/if}}
     </div>
     <div class="overlay-app"></div>
 </div>
 </div>
+{{!--
+<script src="/js/socketClient.js"></script> --}}
 <script>
     $(document).ready(function () {
-        $('.icon').hide()
-        $('.optionTaskCompleted').hide()
-        $('.app-card').hover(function () {
-            var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
-            optionTaskCompleted.show()
-            $('.optionTaskCompleted').click(function () {
-                var icon = $(this).parent().siblings('.icon')
-                icon.show()
-                optionTaskCompleted.hide()
-            })
-
+        $('.createGroup_icon').click(function () {
+            $('.createGroup_icon').hide()
+            $('.create').removeClass('d-none')
+        })
+        $('.app-card-group').click(function () {
+            var groupInformation = $(this).children('.groupName_').text()
+            alert(groupInformation)
+        })
+        $('.app-card-group').hover(function () {
+            var groupInformation = $(this)
+            groupInformation.addClass('background-hover')
         }, function () {
-            var optionTaskCompleted = $(this).children('.status').children('.optionTaskCompleted')
-            optionTaskCompleted.hide()
-            $('.icon').hide()
+            var groupInformation = $(this)
+            groupInformation.removeClass('background-hover')
         })
-        $('.fa-angle-left').click(function () {
-            $('.icon').hide()
-            var optionTaskCompleted = $(this).parent().siblings('.status').children('.optionTaskCompleted')
-            optionTaskCompleted.show()
-        })
-
     })
 </script>

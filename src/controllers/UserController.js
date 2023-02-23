@@ -5,7 +5,8 @@ const User = require('../models/User')
 const OTP = require('../models/OTP')
 const Task = require('../models/PersonTask')
 const bcrypt = require('bcrypt')
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
+
 const UserControllers = {
     getRegister: async(req, res, next) => {
         let error = req.flash('error' || '')
@@ -56,7 +57,7 @@ const UserControllers = {
             req.flash('error', 'Please fill your email or password')
             return res.redirect('/user/login')
         }
-        await UserAPI.getOne({ email }).then(user => {
+        await User.findOne({ email: email }).then(async user => {
             if (!user) {
                 req.flash('error', 'Email or Password was wrong !')
                 return res.redirect('/user/login')
@@ -68,6 +69,8 @@ const UserControllers = {
                     req.session.fullName = user.fullName
                     req.session.isPremium = user.isPremium
                     req.session.avatar = user.avatar
+                    user.isLogin = true
+                    await user.save()
                     return res.redirect('/home')
                 } else {
                     req.flash('error', 'Email or Password was wrong !')
@@ -77,13 +80,20 @@ const UserControllers = {
         })
     },
     getLogout: async(req, res, next) => {
-        let user = await UserAPI.getOne({ email: req.session.email })
-        if (!user) {
-            return res.redirect('/user/login')
-        } else {
-            req.session.destroy()
-            return res.redirect('/user/login')
-        }
+        await User.findOne({ email: req.session.email || req.user.email }).then(async user => {
+            // console.log(user)
+            if (!user) {
+                return res.redirect('/user/login')
+            } else {
+                user.isLogin = false
+                await user.save()
+                req.session.destroy(function() {
+                    res.clearCookie('connect.sid', { path: '/' }).status(200)
+                    return res.redirect("/user/login");
+                });
+                // return res.redirect('/user/login')
+            }
+        })
     },
     getForgotPassword: async(req, res, next) => {
         let error = req.flash('error' || '')

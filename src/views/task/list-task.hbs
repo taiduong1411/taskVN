@@ -260,9 +260,6 @@ bottom: 0;">
             $('.content-section').removeClass('d-none')
         })
         */
-
-
-
         var input = `<div class="sub-title">
                                 <span class="ml-3 mr-1 countInput"></span>
                                 <input type="text" name="task" id="task" placeholder="Enter your Title Task"
@@ -281,9 +278,18 @@ bottom: 0;">
             }
         })
         /*
-        var url = $('.app-card__subtext').children().children().siblings('.check-done')
-        url.click(function () {
-            $(this).siblings('.form-check-label').children('.taskName').css('opacity', '0.1')
+        $('.check-done').click(function (e) {
+            e.preventDefault()
+            $.ajax({
+                url: '/task/check-done/:id',
+                method: 'PUT',
+                data: {
+                    isFinish: true
+                },
+                success: function (sc) {
+                    alert('pass')
+                }
+            })
         })
         */
     })

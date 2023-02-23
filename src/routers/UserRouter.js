@@ -6,6 +6,7 @@ const UserControllers = require('../controllers/UserController')
 
 router.get('/register', UserControllers.getRegister)
 router.get('/login', UserControllers.getLogin)
+
 router.get('/logout', UserControllers.getLogout)
 router.get('/forgot-password', UserControllers.getForgotPassword)
 router.get('/send-code', UserControllers.getSendCode)
