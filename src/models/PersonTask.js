@@ -26,9 +26,6 @@ const TaskModel = new Schema({
         type: String,
         require: true
     },
-    member: {
-        type: [String]
-    },
     isComplete: {
         type: Boolean,
         default: false

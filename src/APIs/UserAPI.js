@@ -11,7 +11,7 @@ const UserAPI = {
                 })
         }
         if (options.email) {
-            return await User.findOne({ email: options.email }).lean()
+            return await User.findOne({ email: options.email || req.user.email }).lean()
                 .then(user => {
                     return user
                 })

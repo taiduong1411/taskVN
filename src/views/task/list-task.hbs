@@ -1,3 +1,9 @@
+<div class="video-bg">
+    <video width="320" height="240" autoplay loop muted>
+        <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
 <div class="create-task">
     <button class="btn btn-success"><a href="/user/create-task">+</a></button>
 </div>
@@ -133,13 +139,13 @@
                                         {{/if}}
                                     </label>
                                     {{#if isFinish}}
-                                    <a href="/task/check-done/{{_id}}" class="check-done"
+                                    <a href="/task/check-done/{{_id}}" data-id="{{_id}}" class="check-done"
                                         style="color: green; opacity:0.8; pointer-events: none;">
                                         <i class="fa fa-check" aria-hidden="true" style="position: absolute; right: 0;">
                                         </i>
                                     </a>
                                     {{else}}
-                                    <a href="/task/check-done/{{_id}}" class="check-done"
+                                    <a href="/task/check-done/{{_id}}" class="check-done" data-id="{{_id}}"
                                         style="color: white; opacity:0.5;">
                                         <i class="fa fa-check" aria-hidden="true"
                                             style="position: absolute; right: 0; opacity: 0.5">
@@ -277,20 +283,18 @@ bottom: 0;">
                 $('.add').addClass('d-none')
             }
         })
-        /*
+
         $('.check-done').click(function (e) {
+            let id = $(this).data('id')
             e.preventDefault()
+            $(this).attr('style', 'color: green; opacity: 1; pointer-events: none;')
+            $(this).siblings().children('.taskName').attr('style', 'opacity: 0.1;')
             $.ajax({
-                url: '/task/check-done/:id',
-                method: 'PUT',
-                data: {
-                    isFinish: true
-                },
+                url: `/task/check-done/${id}`,
+                method: 'GET',
                 success: function (sc) {
-                    alert('pass')
                 }
             })
         })
-        */
     })
 </script>

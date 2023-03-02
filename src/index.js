@@ -52,6 +52,7 @@ const key = require('./services/GoogleAuthKey')
 // MIDDLEWARE
 
 const authGoogle = require('./middlewares/authGoogle')
+const authFacebook = require('./middlewares/authFacebook')
     // config
 app.set('view engine', 'hbs');
 app.engine('hbs', handlebars.engine({
@@ -97,6 +98,7 @@ function isLog(req, res, next) {
         return res.redirect('/user/login')
     }
 }
+//GOOGLE
 app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }))
@@ -105,7 +107,19 @@ app.get('/auth/google/callback',
         failureRedirect: "/404",
         successRedirect: "/home"
     })
+);
+// FACEBOOK
+app.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['public_profile', 'email']
+}))
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        failureRedirect: "/404",
+        successRedirect: "/home"
+    })
 )
+
+
 app.get('/get-started', async(req, res, next) => {
     return res.render('get-started')
 })
@@ -133,7 +147,7 @@ app.get('/404', (req, res, next) => {
     return res.render('404')
 })
 app.get('/', (req, res, next) => {
-    return res.redirect('/home')
+    return res.redirect('/get-started')
 })
 
 // SOCKET.IO

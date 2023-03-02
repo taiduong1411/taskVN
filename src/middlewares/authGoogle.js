@@ -14,7 +14,8 @@ passport.use(
         await User.findOne({ email: profile.emails[0].value }).then(async user => {
             if (!user) {
                 let data = {
-                    googleID: profile.id,
+                    SocialID: profile.id,
+                    provider: 'google',
                     fullName: profile._json.name,
                     email: profile._json.email,
                     avatar: profile._json.picture

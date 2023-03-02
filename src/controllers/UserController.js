@@ -29,6 +29,8 @@ const UserControllers = {
             return res.redirect('/user/register')
         }
         const data = {
+            SocialID: '',
+            provider: 'local',
             fullName: fullName,
             avatar: 'https://cdna.artstation.com/p/assets/images/images/046/036/590/large/whitecap-220206-lotso-face-final-jpg.jpg?1644162312',
             email: email,
@@ -197,7 +199,7 @@ const UserControllers = {
         })
     },
     getProfile: async(req, res, next) => {
-        let user = await UserAPI.getOne({ email: req.session.email })
+        let user = await UserAPI.getOne({ email: req.session.email || req.user.email })
         let tasks = await Task.find({ sort: 0 }).lean()
         let TaskActiveCount = tasks.filter(tasks => tasks.personCreate == user.email && tasks.isComplete == false)
         let TaskCompletedCount = tasks.filter(tasks => tasks.personCreate == user.email && tasks.isComplete == true)

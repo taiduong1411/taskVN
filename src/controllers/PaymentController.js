@@ -3,7 +3,7 @@ const UserAPI = require('../APIs/UserAPI');
 const User = require('../models/User')
 const PaymentController = {
     getPayment: async(req, res, next) => {
-        let user = await UserAPI.getOne({ email: req.session.email })
+        let user = await UserAPI.getOne({ email: req.session.email || req.user.email })
         return res.render('payment/payment', {
             avatar: user.avatar,
             fullName: user.fullName

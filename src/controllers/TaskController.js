@@ -8,9 +8,10 @@ const PersonTask = require('../models/PersonTask')
 
 
 
+
 const TaskController = {
     getCreate: async(req, res, next) => {
-        let user = await UserAPI.getOne({ email: req.session.email })
+        let user = await UserAPI.getOne({ email: req.session.email || req.user.email })
         return res.render('task/create-task', {
             email: user.email,
             avatar: user.avatar,
@@ -51,7 +52,7 @@ const TaskController = {
             taskID: code,
             title: title,
             description: descriptions,
-            personCreate: req.session.email
+            personCreate: req.session.email || req.user.email
         }
         await Task(data).save()
         return res.redirect('/task/list-task')
@@ -59,8 +60,8 @@ const TaskController = {
     getListTask: async(req, res, next) => {
         var tasks = await TaskAPI.getAll({ sort: 0 })
             // var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
-        var myTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == false)
-        var myCompletedTask = tasks.filter(tasks => tasks.personCreate == req.session.email && tasks.isComplete == true && tasks.isHide == false)
+        var myTask = tasks.filter(tasks => tasks.personCreate == (req.session.email || req.user.email) && tasks.isComplete == false)
+        var myCompletedTask = tasks.filter(tasks => tasks.personCreate == (req.session.email || req.user.email) && tasks.isComplete == true && tasks.isHide == false)
         for (var i = 0; i < tasks.length; i++) {
             var k = 0
             for (var j = 0; j < tasks[i].description.length; j++) {
@@ -82,13 +83,15 @@ const TaskController = {
                 })
             }
         }
+        // console.log(req.user.isPremium)
         return res.render('task/list-task', {
-            email: req.session.email,
-            avatar: req.session.avatar,
-            isPremium: (req.session.isPremium == true) ? false : true,
+            email: req.session.email || req.user.email,
+            avatar: req.session.avatar || req.user.avatar,
+            isPremium: (req.session.isPremium == true || req.user.isPremium == true) ? false : true,
             myTask: myTask.slice(0, 3),
             myCompletedTask: myCompletedTask.slice(0, 3),
-            fullName: req.session.fullName,
+            fullName: req.session.fullName || req.user.fullName,
+            countTask: tasks.length
         })
     },
     getCheckDone: async(req, res, next) => {
@@ -105,10 +108,11 @@ const TaskController = {
                 }
             }
         }
-        return res.redirect('/task/list-task')
+        return res.sendStatus(200)
     },
     getDoneTask: async(req, res, next) => {
         const idUrl = req.params.id
+            // console.log(idUrl)
         let task = await Task.findOne({ _id: idUrl }).then(async task => {
             if (!task) {
                 return res.redirect('/404')
@@ -228,7 +232,7 @@ const TaskController = {
                 return res.render('task/chat', {
                     data: data,
                     isLogin: user.isLogin,
-                    avatar: req.session.avatar,
+                    avatar: user.avatar,
                     idUrl: idFriend
                 })
             }

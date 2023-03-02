@@ -1,3 +1,9 @@
+<div class="video-bg">
+    <video width="320" height="240" autoplay loop muted>
+        <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
 <div class="create-task">
     <button class="btn btn-success"><a href="/user/create-task">+</a></button>
 </div>
@@ -48,7 +54,10 @@
                                 aria-hidden="true"></i></a>
                         <div style="display: flex;" class="mt-3">
                             <div>
-                                <i class="fa fa-plus createGroup_icon mr-3" aria-hidden="true"></i>
+                                <a href="/task/group/create">
+                                    <i class="fa fa-plus mr-3" aria-hidden="true">
+                                    </i>
+                                </a>
                             </div>
                             {{#each list_friends}}
                             <div class="container-list-friends" style="width: 80px;">
@@ -108,10 +117,12 @@
 <script src="/js/socketClient.js"></script> --}}
 <script>
     $(document).ready(function () {
+        /*
         $('.createGroup_icon').click(function () {
             $('.createGroup_icon').hide()
             $('.create').removeClass('d-none')
         })
+        */
         $('.app-card-group').click(function () {
             var groupInformation = $(this).children('.groupName_').text()
             alert(groupInformation)

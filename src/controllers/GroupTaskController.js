@@ -8,10 +8,10 @@ const express = require('express')
 
 const GroupTaskController = {
     getGroupTask: async(req, res, next) => {
-        await User.findOne({ email: req.session.email }).lean().then(async user => {
+        await User.findOne({ email: req.session.email || req.user.email }).lean().then(async user => {
             if (user.myGroupTask == '') {
                 return res.render('task/group/group-task', {
-                    avatar: req.session.avatar,
+                    avatar: req.session.avatar || req.user.avatar,
                     toast: true
                 })
             } else {
@@ -32,7 +32,7 @@ const GroupTaskController = {
                     })
                 }
                 return res.render('task/group/group-task', {
-                    avatar: req.session.avatar,
+                    avatar: req.session.avatar || req.user.avatar,
                     data: user.myGroupTask,
                     list_friends: friend_data
                 })
@@ -40,11 +40,22 @@ const GroupTaskController = {
         })
     },
     getGroupCreate: async(req, res, next) => {
-        return res.render('task/group/create')
+        let user = await UserAPI.getOne({ email: req.session.email || req.user.email })
+        var dataFriend = []
+        for (var i = 0; i < user.myFriend.length; i++) {
+            var data = {
+                email: user.myFriend[i]
+            }
+            dataFriend.push(data)
+        }
+        return res.render('task/group/create', {
+            dataFriends: dataFriend,
+            avatar: req.session.avatar || req.user.avatar
+        })
     },
     postGroupCreate: async(req, res, next) => {
         const { groupName, myFriend } = req.body
-        let user = await User.findOne({ email: req.session.email }).then(async user => {
+        let user = await User.findOne({ email: req.session.email || req.user.email }).then(async user => {
             if (!user) {
                 return res.redirect('/404')
             } else {
