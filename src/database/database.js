@@ -5,7 +5,9 @@ async function connect() {
         await mongoose.set('strictQuery', true);
         await mongoose.connect('mongodb://localhost:27017/TASK', {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+            useFindAndModify: false,
         })
         console.log('connect db success')
     } catch (error) {
